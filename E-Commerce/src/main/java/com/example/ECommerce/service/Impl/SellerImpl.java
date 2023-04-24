@@ -5,6 +5,7 @@ import com.example.ECommerce.dtos.requestDtos.SellerRequestDto;
 import com.example.ECommerce.dtos.responseDtos.SellerResponseDto;
 import com.example.ECommerce.entity.Seller;
 import com.example.ECommerce.exceptions.MobileNotFound;
+import com.example.ECommerce.exceptions.SellerNotFound;
 import com.example.ECommerce.repository.SellerRepository;
 import com.example.ECommerce.service.SellerService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,5 +78,59 @@ public class SellerImpl implements SellerService {
 
         sellerRepository.delete(seller);
         return seller.getEnterprise()+" has been Deleted successfully!";
+    }
+
+    @Override
+    public SellerResponseDto getSellerbyEmail(String mailId) throws SellerNotFound {
+
+        Seller seller=sellerRepository.findByEmail(mailId);
+
+        if(seller==null)
+            throw new SellerNotFound("Wrong mailId Entered");
+
+        return SellerTransformer.sellerToSellerResponseDto(seller);
+    }
+
+    @Override
+    public SellerResponseDto getSellerbyId(int id) throws SellerNotFound {
+        Seller seller;
+        try
+        {
+            seller=sellerRepository.findById(id).get();
+        }
+        catch ( Exception e)
+        {
+            throw new SellerNotFound("Seller not found");
+        }
+        return SellerTransformer.sellerToSellerResponseDto(seller);
+    }
+
+    @Override
+    public SellerResponseDto updateSellerDetailsByEmail(String mailId,SellerRequestDto sellerRequestDto) throws SellerNotFound {
+
+        Seller seller=sellerRepository.findByEmail(mailId);
+
+        if(seller==null)
+        {
+            throw new SellerNotFound("No Seller found");
+        }
+        //updating and saving seller
+        Seller updatedSeller=sellerRepository.save(SellerTransformer.updateSeller(seller,sellerRequestDto));
+
+        return SellerTransformer.sellerToSellerResponseDto(updatedSeller);
+    }
+
+    @Override
+    public Object deleteSellerbyEmail(String emailID) throws SellerNotFound {
+        try
+        {
+            sellerRepository.delete(sellerRepository.findByEmail(emailID));
+        }
+        catch (Exception e)
+        {
+            throw  new SellerNotFound("Wrong mail! No seller exists");
+        }
+
+        return "Deleted Successfully";
     }
 }

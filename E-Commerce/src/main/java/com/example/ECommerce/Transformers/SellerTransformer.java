@@ -30,4 +30,14 @@ public class SellerTransformer {
 
         return sellerResponseDto;
     }
+
+    public static Seller updateSeller(Seller seller, SellerRequestDto sellerRequestDto)
+    {
+        seller.setEnterprise(sellerRequestDto.getCompanyName());
+        seller.setAddress(sellerRequestDto.getAddress());
+        seller.setEmail(sellerRequestDto.getEmail());
+        seller.setMobileNo(sellerRequestDto.getMobileNo());
+        seller.setOwnerName(sellerRequestDto.getOwnerName());
+        return  seller;
+    }
 }
