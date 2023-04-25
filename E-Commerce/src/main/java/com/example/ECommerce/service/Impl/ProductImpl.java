@@ -202,4 +202,19 @@ public class ProductImpl implements ProductService {
 
         return productResponseDtoList;
     }
+
+    @Override
+    public Object getProductsInCategoryLessthanPrice(int price, String category) {
+
+        List<Product> productList=productRepository.findProductsBetweenRateinCategory(price,category);
+
+        List<ProductResponseDto> productResponseDtoList=new ArrayList<>();
+
+        for(Product product : productList)
+        {
+            productResponseDtoList.add(ProductTransfomer.productToProductResponseDto(product));
+        }
+
+        return productResponseDtoList;
+    }
 }

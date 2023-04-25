@@ -2,10 +2,7 @@ package com.example.ECommerce.entity;
 
 import com.example.ECommerce.Enum.CardType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.util.ArrayList;
@@ -17,6 +14,7 @@ import java.util.List;
 @Table(name = "cards")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Cards {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,7 +23,7 @@ public class Cards {
     String cardNo;
     String expiry;
     int cvv;
-
+    @Enumerated(EnumType.STRING)
     CardType cardType;
 
     @ManyToOne

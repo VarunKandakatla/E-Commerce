@@ -68,6 +68,12 @@ public class ProductController {
     {
         return new ResponseEntity(productService.getCheapProductsinCategory(category),HttpStatus.ACCEPTED);
     }
+//CUSTOM QUERY
+    @GetMapping("/getProductsInCategoryLessthanPrice")
+    public ResponseEntity getProductsInCategoryLessthanPrice(@RequestParam int price, String category)
+    {
+        return new ResponseEntity<>(productService.getProductsInCategoryLessthanPrice(price,category),HttpStatus.ACCEPTED);
+    }
 
 //    Costly product in particular category
     @GetMapping("/getCostliestProductInCategory")

@@ -28,4 +28,6 @@ public interface ProductService {
     Object getCheapProductsinCategory(Category category);
 
     Object getCostliestProductInCategory(Category category);
+
+    Object getProductsInCategoryLessthanPrice(int price, String category);
 }
