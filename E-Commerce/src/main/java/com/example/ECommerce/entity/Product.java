@@ -5,6 +5,9 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Entity
@@ -31,4 +34,7 @@ public class Product {
     @ManyToOne
     @JoinColumn
     Wishlist wishlist;
+
+    @OneToMany(mappedBy = "product",cascade = CascadeType.ALL)
+    List<Items> itemsList=new ArrayList<>();
 }

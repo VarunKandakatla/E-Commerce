@@ -2,6 +2,7 @@ package com.example.ECommerce.Transformers;
 
 import com.example.ECommerce.dtos.requestDtos.ProductRequestDto;
 import com.example.ECommerce.dtos.responseDtos.ProductResponseDto;
+import com.example.ECommerce.entity.Items;
 import com.example.ECommerce.entity.Product;
 
 public class ProductTransfomer {
@@ -22,12 +23,22 @@ public class ProductTransfomer {
     {
         ProductResponseDto productResponseDto= ProductResponseDto.builder()
                 .category(product.getCategory())
-                .name(product.getName())
+                .productName(product.getName())
                 .price(product.getPrice())
                 .quantity(product.getQuantity())
-                .sellerName(product.getSeller().getEnterprise())
+                .name(product.getSeller().getEnterprise())
                 .build();
 
         return productResponseDto;
+    }
+
+    public static ProductResponseDto ItemToProductResponseDto(Items items)
+    {
+        return ProductResponseDto.builder()
+                .productName(items.getName())
+                .name(items.getCart().getCustomer().getName())
+                .quantity(items.getReqQuantity())
+                .category(items.getProduct().getCategory())
+                .price(items.getPrice()).build();
     }
 }

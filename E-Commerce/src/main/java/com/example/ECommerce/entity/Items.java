@@ -1,10 +1,7 @@
 package com.example.ECommerce.entity;
 
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 @Data
@@ -13,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @Table(name = "items")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Items {
 
     @Id
@@ -30,4 +28,8 @@ public class Items {
     @ManyToOne
     @JoinColumn
     Orders orders;
+
+    @ManyToOne
+    @JoinColumn
+    Product product;
 }

@@ -4,6 +4,7 @@ import com.example.ECommerce.Enum.Category;
 import com.example.ECommerce.Transformers.ProductTransfomer;
 import com.example.ECommerce.dtos.requestDtos.ProductRequestDto;
 import com.example.ECommerce.dtos.responseDtos.ProductResponseDto;
+import com.example.ECommerce.entity.Items;
 import com.example.ECommerce.entity.Product;
 import com.example.ECommerce.entity.Seller;
 import com.example.ECommerce.exceptions.SellerNotFound;
@@ -217,4 +218,6 @@ public class ProductImpl implements ProductService {
 
         return productResponseDtoList;
     }
+
+
 }

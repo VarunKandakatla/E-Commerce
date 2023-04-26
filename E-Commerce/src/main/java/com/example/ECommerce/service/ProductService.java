@@ -5,6 +5,7 @@ import com.example.ECommerce.Enum.Category;
 import com.example.ECommerce.dtos.requestDtos.ProductRequestDto;
 import com.example.ECommerce.dtos.responseDtos.ProductResponseDto;
 import com.example.ECommerce.exceptions.SellerNotFound;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -30,4 +31,5 @@ public interface ProductService {
     Object getCostliestProductInCategory(Category category);
 
     Object getProductsInCategoryLessthanPrice(int price, String category);
+
 }

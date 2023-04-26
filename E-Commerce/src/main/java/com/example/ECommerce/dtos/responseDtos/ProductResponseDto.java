@@ -15,8 +15,8 @@ import org.springframework.stereotype.Service;
 @Builder
 public class ProductResponseDto {
 
+    String productName;
     String name;
-    String sellerName;
     @Enumerated(EnumType.STRING)
     Category category;
     int quantity;
