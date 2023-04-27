@@ -1,6 +1,7 @@
 package com.example.ECommerce.entity;
 
 import com.example.ECommerce.Enum.Category;
+import com.example.ECommerce.Enum.ProductStatus;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -30,6 +31,9 @@ public class Product {
     @ManyToOne
     @JoinColumn
     Seller seller;
+
+    @Enumerated(EnumType.STRING)
+    ProductStatus productStatus;
 
     @ManyToOne
     @JoinColumn

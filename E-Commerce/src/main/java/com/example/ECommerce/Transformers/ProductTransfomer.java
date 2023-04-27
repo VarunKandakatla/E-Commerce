@@ -1,9 +1,12 @@
 package com.example.ECommerce.Transformers;
 
+import com.example.ECommerce.Enum.ProductStatus;
 import com.example.ECommerce.dtos.requestDtos.ProductRequestDto;
 import com.example.ECommerce.dtos.responseDtos.ProductResponseDto;
 import com.example.ECommerce.entity.Items;
 import com.example.ECommerce.entity.Product;
+
+import java.util.List;
 
 public class ProductTransfomer {
 
@@ -14,6 +17,7 @@ public class ProductTransfomer {
                 .category(productRequestDto.getCategory())
                 .quantity(productRequestDto.getQuantity())
                 .price(productRequestDto.getPrice())
+                .productStatus(ProductStatus.AVAILABLE)
                 .build();
 
         return product;
@@ -40,5 +44,26 @@ public class ProductTransfomer {
                 .quantity(items.getReqQuantity())
                 .category(items.getProduct().getCategory())
                 .price(items.getPrice()).build();
+    }
+
+    public static void ReduceQuantity(List<Items> itemsList) throws Exception {
+        for(Items items: itemsList)
+        {
+            if(items.getReqQuantity()>items.getProduct().getQuantity())
+            {
+                throw new Exception();
+            }
+            else
+            {
+                Product product = items.getProduct();
+                int updateQuantity= product.getQuantity()-items.getReqQuantity();
+                product.setQuantity(updateQuantity);
+
+                if(product.getQuantity()==0)
+                {
+                    product.setProductStatus(ProductStatus.OUT_OF_STOCK);
+                }
+            }
+        }
     }
 }

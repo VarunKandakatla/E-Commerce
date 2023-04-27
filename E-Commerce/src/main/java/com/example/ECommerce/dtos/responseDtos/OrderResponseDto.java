@@ -6,17 +6,22 @@ import lombok.experimental.FieldDefaults;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 @Setter
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class CartResponseDto {
+public class OrderResponseDto {
 
-    String customerName;
-    int total_products;
-    long cartValue;
-    //have to use itemResponse dto
+    String customer_Name;
+    String address;
+    String paymentMethod;
+
+    String orderId;
+    String date;
+    int TotalItems;
+    long total_OrderValue;
+
     List<OrderedItemResponseDto> items=new ArrayList<>();
+
 }

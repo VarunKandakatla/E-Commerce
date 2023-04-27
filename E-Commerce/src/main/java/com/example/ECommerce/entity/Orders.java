@@ -2,11 +2,9 @@ package com.example.ECommerce.entity;
 
 import com.example.ECommerce.Enum.CardType;
 import jakarta.persistence.*;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,13 +17,16 @@ import java.util.UUID;
 @Table(name = "orders")
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class Orders {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     int id;
     String orderId= UUID.randomUUID().toString();
-    Date date=new Date();
+    @CreationTimestamp
+    Date date;
+
     String address;
 
     @ManyToOne

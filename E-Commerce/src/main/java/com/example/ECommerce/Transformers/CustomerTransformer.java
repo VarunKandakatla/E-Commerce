@@ -6,6 +6,8 @@ import com.example.ECommerce.entity.Cart;
 import com.example.ECommerce.entity.Customer;
 import com.example.ECommerce.entity.Wishlist;
 
+import java.util.ArrayList;
+
 public class CustomerTransformer {
 
     public static Customer CustomerRequesttoCustomer(CustomerRequestDto customerRequestDto)
@@ -21,6 +23,8 @@ public class CustomerTransformer {
         //setting cart
         Cart cart= Cart.builder()
                 .customer(customer)
+                .itemsList(new ArrayList<>())
+                .cartValue(0)
                 .build();
 
         //setting wishlist

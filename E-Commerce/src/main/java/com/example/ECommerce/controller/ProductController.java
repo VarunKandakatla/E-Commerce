@@ -117,4 +117,16 @@ public class ProductController {
         }
     }
 
+    @PutMapping("/updateQuantity")
+    public ResponseEntity updateQuantity(@RequestParam int productId, int quantity)
+    {
+        try
+        {
+            return new ResponseEntity<>(productService.updateQuantity(productId,quantity),HttpStatus.ACCEPTED);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+    }
+
 }

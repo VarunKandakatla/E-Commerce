@@ -2,6 +2,7 @@ package com.example.ECommerce.Transformers;
 
 import com.example.ECommerce.dtos.requestDtos.ItemRequestDto;
 import com.example.ECommerce.dtos.responseDtos.ItemResponseDto;
+import com.example.ECommerce.dtos.responseDtos.OrderedItemResponseDto;
 import com.example.ECommerce.entity.Cart;
 import com.example.ECommerce.entity.Customer;
 import com.example.ECommerce.entity.Items;
@@ -43,5 +44,16 @@ public class ItemTransformer {
        }
 
        return null;
+   }
+
+   public static OrderedItemResponseDto itemToOrderedItemResponseDto(Items items)
+   {
+       return OrderedItemResponseDto.builder()
+               .product_Name(items.getProduct().getName())
+               .manufacturer(items.getProduct().getSeller().getEnterprise())
+               .price(items.getPrice())
+               .quantity(items.getReqQuantity())
+               .totalPrice(items.getPrice()* items.getReqQuantity())
+               .build();
    }
 }

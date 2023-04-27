@@ -23,7 +23,6 @@ public class ItemController {
     {
         try
         {
-//            Items items = itemService.addItem(itemRequestDto);
             return new ResponseEntity<>(itemService.addItem(itemRequestDto), HttpStatus.ACCEPTED);
         }catch (Exception e)
         {

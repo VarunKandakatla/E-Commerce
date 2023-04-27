@@ -34,6 +34,11 @@ public class ItemImpl implements ItemService {
     @Override
     public ItemResponseDto addItem(ItemRequestDto itemRequestDto) throws CustomerNotFound, ProductNotFound {
 
+        //EDGE CASE
+        if(itemRequestDto.getReqQuantity()<=0)
+        {
+            throw new RuntimeException("Invalid required Quantity!");
+        }
         //Checking customer is Valid or not
 
         Customer customer;
@@ -58,7 +63,7 @@ public class ItemImpl implements ItemService {
 
         //Checking the reqQuantity is Available or not
 
-        if(product.getQuantity()<itemRequestDto.getReqQuantity())
+        if(product.getQuantity()<itemRequestDto.getReqQuantity() || QuantityAvailable(itemRequestDto,customer) == false)
         {
             throw new ProductNotFound("Quantity is Exceeded! Not Available");
         }
@@ -119,6 +124,27 @@ public class ItemImpl implements ItemService {
        return "TotalCarts in which product exists is: "+cartIds.size()+"\nCarts are: "+cartIds.toString();
     }
 
+    public boolean QuantityAvailable(ItemRequestDto itemRequestDto, Customer customer)
+    {
+        List<Items> itemsList= customer.getCart().getItemsList();
 
+
+        for(Items items : itemsList)
+        {
+            if(items.getProduct().getId()==itemRequestDto.getProductId())
+            {
+                if(items.getProduct().getQuantity()<items.getReqQuantity()+itemRequestDto.getReqQuantity())
+                {
+                    return false;
+                }
+                else {
+                    //Quantity Available
+                    break;
+                }
+            }
+        }
+
+        return true;
+    }
 
 }

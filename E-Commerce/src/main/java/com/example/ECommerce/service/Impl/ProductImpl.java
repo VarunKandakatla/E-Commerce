@@ -1,12 +1,14 @@
 package com.example.ECommerce.service.Impl;
 
 import com.example.ECommerce.Enum.Category;
+import com.example.ECommerce.Enum.ProductStatus;
 import com.example.ECommerce.Transformers.ProductTransfomer;
 import com.example.ECommerce.dtos.requestDtos.ProductRequestDto;
 import com.example.ECommerce.dtos.responseDtos.ProductResponseDto;
 import com.example.ECommerce.entity.Items;
 import com.example.ECommerce.entity.Product;
 import com.example.ECommerce.entity.Seller;
+import com.example.ECommerce.exceptions.ProductNotFound;
 import com.example.ECommerce.exceptions.SellerNotFound;
 import com.example.ECommerce.repository.ProductRepository;
 import com.example.ECommerce.repository.SellerRepository;
@@ -217,6 +219,31 @@ public class ProductImpl implements ProductService {
         }
 
         return productResponseDtoList;
+    }
+
+    @Override
+    public Object updateQuantity(int productId, int quantity) throws ProductNotFound {
+        if(quantity<0)
+        {
+            throw new RuntimeException("Please Enter a Valid Quantity");
+        }
+
+        Product product;
+        try{
+            product=productRepository.findById(productId).get();
+        }catch (Exception e)
+        {
+            throw new ProductNotFound("Invalid Product Id");
+        }
+
+        product.setQuantity(product.getQuantity()+quantity);
+
+        if(product.getQuantity()>0)
+        {
+            product.setProductStatus(ProductStatus.AVAILABLE);
+        }
+
+        return ProductTransfomer.productToProductResponseDto(productRepository.save(product));
     }
 
 

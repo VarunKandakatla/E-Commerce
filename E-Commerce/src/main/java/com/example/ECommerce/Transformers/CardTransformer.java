@@ -1,8 +1,11 @@
 package com.example.ECommerce.Transformers;
 
 import com.example.ECommerce.dtos.requestDtos.CardRequestDto;
+import com.example.ECommerce.dtos.requestDtos.CartCheckOutRequestDto;
 import com.example.ECommerce.dtos.responseDtos.CardResponseDto;
 import com.example.ECommerce.entity.Cards;
+
+import java.util.List;
 
 public class CardTransformer {
 
@@ -23,5 +26,18 @@ public class CardTransformer {
                 .cardType(cards.getCardType())
                 .customerName(cards.getCustomer().getName())
                 .build();
+    }
+
+    public static Cards ValidateCardDetails(CartCheckOutRequestDto cartCheckOutRequestDto, List<Cards> cardsList)
+    {
+        for(Cards cards : cardsList)
+        {
+            if(cards.getCardNo().equals(cartCheckOutRequestDto.getCardNo()))
+            {
+                return cards;
+            }
+        }
+
+        return null;
     }
 }
