@@ -4,5 +4,6 @@ public enum CardType {
     MASTERCARD,
     VISA,
     RUPAY,
+    UPI,
     OTHERS
 }

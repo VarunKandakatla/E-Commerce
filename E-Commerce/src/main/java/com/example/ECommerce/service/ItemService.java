@@ -1,6 +1,7 @@
 package com.example.ECommerce.service;
 
 import com.example.ECommerce.dtos.requestDtos.ItemRequestDto;
+import com.example.ECommerce.dtos.requestDtos.ItemRequestDtoByName;
 import com.example.ECommerce.dtos.responseDtos.ItemResponseDto;
 import com.example.ECommerce.entity.Items;
 import com.example.ECommerce.exceptions.CustomerNotFound;
@@ -18,4 +19,5 @@ public interface ItemService {
     Object getListofCartsWithProduct(int productId);
 
 
+    Object addItemTotheCartByName(ItemRequestDtoByName itemRequestDtoByName) throws ProductNotFound, CustomerNotFound;
 }

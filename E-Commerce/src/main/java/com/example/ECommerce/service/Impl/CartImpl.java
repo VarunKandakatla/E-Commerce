@@ -129,6 +129,7 @@ public class CartImpl implements CartService {
 
         //resetting cart
         CartTransformer.ResetCart(cart);
+        cartRepository.save(cart);
 
         //orderResponse
         return orderResponseDto;

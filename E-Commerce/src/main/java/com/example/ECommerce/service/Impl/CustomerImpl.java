@@ -1,5 +1,6 @@
 package com.example.ECommerce.service.Impl;
 
+import com.example.ECommerce.Emails.SendEmail;
 import com.example.ECommerce.Transformers.CustomerTransformer;
 import com.example.ECommerce.Transformers.ItemTransformer;
 import com.example.ECommerce.dtos.requestDtos.CustomerRequestDto;
@@ -11,6 +12,8 @@ import com.example.ECommerce.exceptions.MobileNotFound;
 import com.example.ECommerce.repository.CustomerRepository;
 import com.example.ECommerce.service.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -21,6 +24,9 @@ public class CustomerImpl implements CustomerService {
 
     @Autowired
     CustomerRepository customerRepository;
+
+    @Autowired
+    JavaMailSender emailSender;
     @Override
     public CustomerResponseDto addCustomer(CustomerRequestDto customerRequestDto) {
 
@@ -29,6 +35,14 @@ public class CustomerImpl implements CustomerService {
 
         //saving and getting update customer
         Customer updateCustomer=customerRepository.save(customer);
+
+        //Sending Welcoming mail
+        if(CustomerTransformer.checkMailId(customer)==true)
+        {
+            SimpleMailMessage msg = SendEmail.sendWelcomeEmail(updateCustomer);
+            emailSender.send(msg);
+        }
+
 
        //response DTO
         CustomerResponseDto customerResponseDto=CustomerTransformer.customertoCustomerResponseDto(updateCustomer);

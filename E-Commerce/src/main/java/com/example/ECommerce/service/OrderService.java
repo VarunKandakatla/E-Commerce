@@ -9,5 +9,4 @@ public interface OrderService {
 
     OrderResponseDto placeOrder(Cart cart, Cards cards);
 
-    void reAssigningCart(Cards cards);
 }

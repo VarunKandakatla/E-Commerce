@@ -106,4 +106,6 @@ public class SellerController {
             return new ResponseEntity<>(e.getMessage(),HttpStatus.ALREADY_REPORTED);
         }
     }
+
+
 }

@@ -1,6 +1,7 @@
 package com.example.ECommerce.controller;
 
 import com.example.ECommerce.dtos.requestDtos.ItemRequestDto;
+import com.example.ECommerce.dtos.requestDtos.ItemRequestDtoByName;
 import com.example.ECommerce.dtos.responseDtos.ItemResponseDto;
 import com.example.ECommerce.entity.Cart;
 import com.example.ECommerce.entity.Items;
@@ -47,6 +48,18 @@ public class ItemController {
     {
         itemService.deleteAll();
         return "Deleted Successfully";
+    }
+
+    @PostMapping("/addItemByName")
+    public ResponseEntity addItemTotheCartByName(@RequestBody ItemRequestDtoByName itemRequestDtoByName)
+    {
+        try
+        {
+            return new ResponseEntity<>(itemService.addItemTotheCartByName(itemRequestDtoByName),HttpStatus.ACCEPTED);
+        }catch (Exception e)
+        {
+            return new ResponseEntity<>(e.getMessage(),HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

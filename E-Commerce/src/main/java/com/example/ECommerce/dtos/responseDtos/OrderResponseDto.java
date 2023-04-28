@@ -19,8 +19,9 @@ public class OrderResponseDto {
 
     String orderId;
     String date;
-    int TotalItems;
     long total_OrderValue;
+    int TotalItems;
+
 
     List<OrderedItemResponseDto> items=new ArrayList<>();
 

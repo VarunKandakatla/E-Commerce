@@ -7,9 +7,11 @@ import com.example.ECommerce.entity.Cart;
 import com.example.ECommerce.entity.Items;
 import com.example.ECommerce.entity.Orders;
 import org.hibernate.cache.spi.support.AbstractReadWriteAccess;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 import java.util.Date;
+import java.util.List;
 
 
 public class OrderTransfomer {
@@ -49,12 +51,38 @@ public class OrderTransfomer {
         return orderResponseDto;
     }
 
-//    public static void AssignCartToOrder(Orders orders)
-//    {
-//        List<Items> itemsList=orders.getItemsList();
-//        for(Items items : itemsList)
-//        {
-//            items.setCart(orders.getCards().getCustomer().getCart());
-//        }
-//    }
+    public static String SetMessage(Orders orders)
+    {
+        //Preparing list of items
+        String itemslist="";
+
+        List<Items> items= orders.getItemsList();
+
+        for(int i=1;i<=items.size();i++)
+        {
+            Items items1=items.get(i-1);
+            itemslist+=i+". "+items1.getName()+",  "+items1.getPrice()+"₹, Quantity: "+items1.getReqQuantity()
+                    +"  ItemTotalCost = "+items1.getPrice()*items1.getReqQuantity()+"₹\n";
+        }
+
+
+        String text=
+                "Hi "+orders.getCards().getCustomer().getName()+
+                "!\nCongratulations! Your Order is Successfull!\n" +
+                        "Thank you for Shopping!\n" +
+                        "Have a Great Day😊😊!\n\n"+
+
+                        "Here is your Order Details:-\n\n"+
+                        "Order Id : "+orders.getOrderId().toString()+"\n" +
+                        "Order Status : SUCCESSFULL\n" +
+                        "Order date : "+new Date().toString()+"\n" +
+                        "Payment Method : "+orders.getCards().getCardType().toString()+"\n"+
+                        "Order Value : "+orders.getCards().getCustomer().getCart().getCartValue()+"₹\n" +
+                        "Total Items : "+orders.getItemsList().size()+"\n\n" +
+                        "Items List :-\n"+itemslist;
+
+        //return textl
+        return text;
+
+    }
 }

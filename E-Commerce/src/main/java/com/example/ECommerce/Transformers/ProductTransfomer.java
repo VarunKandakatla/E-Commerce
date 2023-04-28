@@ -1,8 +1,10 @@
 package com.example.ECommerce.Transformers;
 
 import com.example.ECommerce.Enum.ProductStatus;
+import com.example.ECommerce.dtos.requestDtos.ItemRequestDto;
 import com.example.ECommerce.dtos.requestDtos.ProductRequestDto;
 import com.example.ECommerce.dtos.responseDtos.ProductResponseDto;
+import com.example.ECommerce.entity.Customer;
 import com.example.ECommerce.entity.Items;
 import com.example.ECommerce.entity.Product;
 
@@ -65,5 +67,27 @@ public class ProductTransfomer {
                 }
             }
         }
+    }
+
+    public static boolean QuantityAvailable(ItemRequestDto itemRequestDto, Customer customer)
+    {
+
+        List<Items> itemsList= customer.getCart().getItemsList();
+        for(Items items : itemsList)
+        {
+            if(items.getProduct().getId()==itemRequestDto.getProductId())
+            {
+                if(items.getProduct().getQuantity()<items.getReqQuantity()+itemRequestDto.getReqQuantity())
+                {
+                    return false;
+                }
+                else {
+                    //Quantity Available
+                    break;
+                }
+            }
+        }
+
+        return true;
     }
 }

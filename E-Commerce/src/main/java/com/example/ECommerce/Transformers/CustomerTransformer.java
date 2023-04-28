@@ -52,4 +52,16 @@ public class CustomerTransformer {
 
         return customerResponseDto;
     }
+
+    public static boolean checkMailId(Customer customer)
+    {
+         String gmail=customer.getEmail().toLowerCase();
+
+         if(gmail.length()>10 && gmail.substring(gmail.length()-10).equals("@gmail.com"))
+         {
+             return true;
+         }
+
+         return false;
+    }
 }

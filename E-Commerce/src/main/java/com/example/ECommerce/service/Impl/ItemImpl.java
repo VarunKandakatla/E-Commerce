@@ -1,7 +1,9 @@
 package com.example.ECommerce.service.Impl;
 
 import com.example.ECommerce.Transformers.ItemTransformer;
+import com.example.ECommerce.Transformers.ProductTransfomer;
 import com.example.ECommerce.dtos.requestDtos.ItemRequestDto;
+import com.example.ECommerce.dtos.requestDtos.ItemRequestDtoByName;
 import com.example.ECommerce.dtos.responseDtos.ItemResponseDto;
 import com.example.ECommerce.entity.Cart;
 import com.example.ECommerce.entity.Customer;
@@ -63,7 +65,7 @@ public class ItemImpl implements ItemService {
 
         //Checking the reqQuantity is Available or not
 
-        if(product.getQuantity()<itemRequestDto.getReqQuantity() || QuantityAvailable(itemRequestDto,customer) == false)
+        if(product.getQuantity()<itemRequestDto.getReqQuantity() || ProductTransfomer.QuantityAvailable(itemRequestDto,customer) == false)
         {
             throw new ProductNotFound("Quantity is Exceeded! Not Available");
         }
@@ -124,27 +126,35 @@ public class ItemImpl implements ItemService {
        return "TotalCarts in which product exists is: "+cartIds.size()+"\nCarts are: "+cartIds.toString();
     }
 
-    public boolean QuantityAvailable(ItemRequestDto itemRequestDto, Customer customer)
-    {
-        List<Items> itemsList= customer.getCart().getItemsList();
-
-
-        for(Items items : itemsList)
+    @Override
+    public Object addItemTotheCartByName(ItemRequestDtoByName itemRequestDtoByName) throws ProductNotFound, CustomerNotFound {
+        //iterating to find product
+        List<Product> productList = productRepository.findAll();
+        int productId=0;
+        for(Product product: productList)
         {
-            if(items.getProduct().getId()==itemRequestDto.getProductId())
+            if(product.getName().equals(itemRequestDtoByName.getProductName()))
             {
-                if(items.getProduct().getQuantity()<items.getReqQuantity()+itemRequestDto.getReqQuantity())
-                {
-                    return false;
-                }
-                else {
-                    //Quantity Available
-                    break;
-                }
+                productId=product.getId();
+                break;
             }
         }
 
-        return true;
+        //no product found
+
+        if(productId==0)
+        {
+            throw new ProductNotFound("No Product Found!!!");
+        }
+
+        //create ItemRequestDto and use additem method;
+        ItemRequestDto itemRequestDto=ItemRequestDto.builder()
+                .customerId(itemRequestDtoByName.getCustomerId())
+                .productId(productId)
+                .reqQuantity(itemRequestDtoByName.getReqQuantity())
+                .build();
+
+        return addItem(itemRequestDto);
     }
 
 }
