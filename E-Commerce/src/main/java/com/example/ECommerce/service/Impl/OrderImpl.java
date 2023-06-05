@@ -31,7 +31,7 @@ public class OrderImpl implements OrderService {
 
         Orders orders = OrderTransfomer.createOrder(cart,cards);
         //send OrderConfirmation mail
-        emailSender.send(SendEmail.sendOrderconfirmationMail(orders));
+//        emailSender.send(SendEmail.sendOrderconfirmationMail(orders));
 
         OrderResponseDto orderResponseDto=OrderTransfomer.OrderToOrderResponseDto(orders);
 

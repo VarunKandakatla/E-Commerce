@@ -37,11 +37,11 @@ public class CustomerImpl implements CustomerService {
         Customer updateCustomer=customerRepository.save(customer);
 
         //Sending Welcoming mail
-        if(CustomerTransformer.checkMailId(customer)==true)
-        {
-            SimpleMailMessage msg = SendEmail.sendWelcomeEmail(updateCustomer);
-            emailSender.send(msg);
-        }
+//        if(CustomerTransformer.checkMailId(customer)==true)
+//        {
+//            SimpleMailMessage msg = SendEmail.sendWelcomeEmail(updateCustomer);
+//            emailSender.send(msg);
+//        }
 
 
        //response DTO
